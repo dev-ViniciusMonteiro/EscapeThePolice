@@ -4,16 +4,15 @@ using UnityEngine.SceneManagement;
 public class GameOverController : MonoBehaviour
     {
         bool _gameOver = false;
-        [SerializeField] private float restartDelay = 2f;
+        [SerializeField] private float restartDelay = 2.5f;
         public void EndGame()
         {
             
             if (!_gameOver)
             {
                 _gameOver = true;
-                Debug.Log("GAME OVER!");
-                //restart
-                Invoke("Restart", restartDelay);
+                Debug.Log("Fim!");
+                Invoke("Restart", restartDelay);//reinicia com delay 2.5
             }
         }
 
