@@ -52,8 +52,6 @@ public class ReactiveTarget : MonoBehaviour
         
     }
 
-    
-
     public void ReactToHit(int damage){
         _currentHealth -= damage;
     

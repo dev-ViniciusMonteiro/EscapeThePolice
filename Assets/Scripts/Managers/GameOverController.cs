@@ -18,6 +18,6 @@ public class GameOverController : MonoBehaviour
 
         void Restart()
         {
-            SceneManager.LoadScene("level 1");
+            SceneManager.LoadScene("iniciofim");
         }
     }

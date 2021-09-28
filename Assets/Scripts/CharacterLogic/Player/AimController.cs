@@ -10,53 +10,49 @@ public class AimController : MonoBehaviour
 
     private GameObject _bullet;
     private bool _isReloading;
+    private int _myBullet = 0;
 
-    void Start()
-    {
+    void Start(){
         _camera = GetComponent<Camera>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         _isReloading = false;
     }
 
-    void OnGUI()
-    {
+    void OnGUI(){
         int size = 12;
         float posX = _camera.pixelWidth / 2 - size / 4;
         float posY = _camera.pixelHeight / 2 - size / 4;
         GUI.Label(new Rect(posX, posY, size, size), "*");
     }
 
-    void Update()
-    {
+    void Update(){
         RayCast();
     }
 
-    void RayCast()
-    {
-        if (Input.GetMouseButtonDown(0) && !_isReloading)
-        {
+    //nao tocar 
+    void RayCast(){
+        if (Input.GetMouseButtonDown(0) && !_isReloading){
             var point = new Vector3(_camera.pixelWidth / 2, _camera.pixelHeight / 2, 0);
             var ray = _camera.ScreenPointToRay(point);
 
-            if (Physics.Raycast(ray))
-            {
+            if (Physics.Raycast(ray)){
                 _bullet = Instantiate(_bulletPrefab) as GameObject;
                 _bullet.transform.position = transform.TransformPoint(Vector3.forward * 0.1f);
                 _bullet.transform.rotation = transform.rotation;
-
-                StartCoroutine(Reload());
+                _myBullet+=1;
+                if(_myBullet>9){
+                    StartCoroutine(Reload());
+                }
             }
         }
     }
 
-    private IEnumerator Reload()
-    {
+    private IEnumerator Reload(){
         _isReloading = true;
-        
-        Debug.Log("Reloading...");
+        _myBullet = 0;
+        Debug.Log("Reloading + 10 bullets");
         yield return new WaitForSeconds(_reloadDelay);
-        
         _isReloading = false;
     }
 }
