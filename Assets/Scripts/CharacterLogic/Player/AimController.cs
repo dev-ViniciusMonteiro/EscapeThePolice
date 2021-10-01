@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ public class AimController : MonoBehaviour
     }
 
     void OnGUI(){
-        int size = 12;
+        int size = 9;
         float posX = _camera.pixelWidth / 2 - size / 4;
         float posY = _camera.pixelHeight / 2 - size / 4;
         GUI.Label(new Rect(posX, posY, size, size), "*");
@@ -28,6 +29,10 @@ public class AimController : MonoBehaviour
 
     void Update(){
         RayCast();
+        if (Input.GetKeyDown("r")){
+                    StartCoroutine(Reload());
+        }
+        
     }
 
     //nao tocar 
@@ -35,23 +40,23 @@ public class AimController : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !_isReloading){
             var point = new Vector3(_camera.pixelWidth / 2, _camera.pixelHeight / 2, 0);
             var ray = _camera.ScreenPointToRay(point);
-
-            if (Physics.Raycast(ray)){
-                _bullet = Instantiate(_bulletPrefab) as GameObject;
-                _bullet.transform.position = transform.TransformPoint(Vector3.forward * 0.1f);
-                _bullet.transform.rotation = transform.rotation;
-                _myBullet+=1;
-                if(_myBullet>9){
-                    StartCoroutine(Reload());
+             if(_myBullet<9){
+                if (Physics.Raycast(ray)){
+                    _bullet = Instantiate(_bulletPrefab) as GameObject;
+                    _bullet.transform.position = transform.TransformPoint(Vector3.forward * 0.1f);
+                    _bullet.transform.rotation = transform.rotation;
+                    _myBullet+=1;
+                   
                 }
-            }
+             }
+            
         }
     }
 
     private IEnumerator Reload(){
         _isReloading = true;
         _myBullet = 0;
-        Debug.Log("Reloading + 10 bullets");
+        Debug.Log("Reloading + 9 bullets");
         yield return new WaitForSeconds(_reloadDelay);
         _isReloading = false;
     }

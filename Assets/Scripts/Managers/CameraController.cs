@@ -17,14 +17,14 @@ public class CameraController : MonoBehaviour
     }
 
     void Update(){
-        if (Input.GetKeyDown("f")&&_person==0){
+        if (Input.GetKeyDown("h")&&_person==0){
             _firstViewCamera.enabled = true;
             _thirdViewCamera.enabled = false;
             currentCamera = _firstViewCamera;
             _person=1;
         }
 
-        else if (Input.GetKeyDown("f")&&_person==1){
+        else if (Input.GetKeyDown("h")&&_person==1){
             _firstViewCamera.enabled = false;
             _thirdViewCamera.enabled = true;
             currentCamera = _thirdViewCamera;
