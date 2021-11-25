@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//era pra ser um mapa mas nao deu tempo de terminar :)
 public class WorldSpaceCanvas : MonoBehaviour
 {
     private FPSController player;

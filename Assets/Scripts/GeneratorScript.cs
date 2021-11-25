@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+// no do cara deu certo e no meu nao entao ignore :)
 public class GeneratorScript : MonoBehaviour
 {
-    public GameObject text;
+   /* public GameObject text;
     public Outline outlineScript;
 
     private void Update()
@@ -14,5 +15,5 @@ public class GeneratorScript : MonoBehaviour
         {
             return;
         }
-    }
+    }*/
 }

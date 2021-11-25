@@ -4,16 +4,17 @@ using System.Collections;
 public class Bullet : MonoBehaviour
 {
 	[Range(5, 100)]
-	[Tooltip("After how long time should the bullet prefab be destroyed?")]
+	//Depois de quanto tempo a pré-fabricada bala deve ser destruída? 
 	public float destroyAfter;
-	[Tooltip("If enabled the bullet destroys on impact")]
+	//Se habilitado, a bala destrói com o impacto 
 	public bool destroyOnImpact = false;
-	[Tooltip("Minimum time after impact that the bullet is destroyed")]
+	//Tempo mínimo após o impacto que a bala é destruída 
 	public float minDestroyTime;
-	[Tooltip("Maximum time after impact that the bullet is destroyed")]
+	//Tempo máximo após o impacto em que a bala é destruída
 	public float maxDestroyTime;
 
-	[Header("Impact Effect Prefabs")]
+	//prefabe de impacto com efeito
+	//era pra ser bonitinho em cada testura mas nao tive tempo
 	public Transform[] bloodImpactPrefabs;
 	public Transform[] metalImpactPrefabs;
 	public Transform[] dirtImpactPrefabs;
@@ -24,37 +25,32 @@ public class Bullet : MonoBehaviour
 
 	private void Start()
 	{
-		//Start destroy timer
+		//inicia tempo de detruicao
 		StartCoroutine(DestroyAfter());
 	}
 
-    private void Update()
-    {
-	   //transform.position += transform.forward * speed * Time.deltaTime;
-    }
+    
     private void OnCollisionEnter(Collision collision)
     {
-
+		//se for no player
 		if (collision.gameObject.tag == "Player")
-		{
+		{	//ignora
 			Physics.IgnoreCollision(collision.collider, GetComponent<SphereCollider>(), true);
 		}
-
+		//para inimigo
 		if (collision.gameObject.tag == "Enemy")
         {
 			Instantiate(bloodImpactPrefabs[Random.Range(0, bloodImpactPrefabs.Length)], transform.position, Quaternion.LookRotation(collision.contacts[0].normal));
-
-			if (collision.gameObject.GetComponent<Target>().invulnerabilityTime <= 0)
+			//o C de ivulnerabilidade iria funcionar aqui mas F
+			/*if (collision.gameObject.GetComponent<Target>().invulnerabilityTime <= 0)
             {
 				collision.transform.GetComponent<Target>().TakeDamage(damage);
-				//collision.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll | RigidbodyConstraints.FreezeRotation;
-				//StartCoroutine(ChangeConstrains());
-				//collision.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+				//cara congelou cena mas achei desnessario
 
-            }
+            }*/
 			Destroy(gameObject);			
 		}
-
+		//se nao destruiu
 		if (!destroyOnImpact)
 		{
 			StartCoroutine(DestroyTimer());
@@ -64,61 +60,21 @@ public class Bullet : MonoBehaviour
 			Destroy(gameObject);
 		}
 
-		if (collision.transform.tag == "Metal")
-		{
-			//Instantiate random impact prefab from array
-			Instantiate(metalImpactPrefabs[Random.Range
-				(0, bloodImpactPrefabs.Length)], transform.position,
-				Quaternion.LookRotation(collision.contacts[0].normal));
-			//Destroy bullet object
-			Destroy(gameObject);
-		}
-
-		if (collision.transform.tag == "Dirt")
-		{
-			//Instantiate random impact prefab from array
-			Instantiate(dirtImpactPrefabs[Random.Range
-				(0, bloodImpactPrefabs.Length)], transform.position,
-				Quaternion.LookRotation(collision.contacts[0].normal));
-			//Destroy bullet object
-			Destroy(gameObject);
-		}
-
-		if (collision.transform.tag == "Concrete")
-		{
-			//Instantiate random impact prefab from array
-			Instantiate(concreteImpactPrefabs[Random.Range
-				(0, bloodImpactPrefabs.Length)], transform.position,
-				Quaternion.LookRotation(collision.contacts[0].normal));
-			//Destroy bullet object
-			Destroy(gameObject);
-		}
-
-		if (collision.transform.tag == "ExplosiveBarrel")
-		{
-			//Toggle "explode" on explosive barrel object
-			collision.transform.gameObject.GetComponent
-				<ExplosiveBarrelScript>().explode = true;
-			//Destroy bullet object
-			Destroy(gameObject);
-		}
 
 	}
 
     private IEnumerator DestroyTimer()
 	{
-		//Wait random time based on min and max values
+		//randomico com minimo e maximo
 		yield return new WaitForSeconds
 			(Random.Range(minDestroyTime, maxDestroyTime));
-		//Destroy bullet object
+		//Destroy municao
 		Destroy(gameObject);
 	}
 
 	private IEnumerator DestroyAfter()
 	{
-		//Wait for set amount of time
 		yield return new WaitForSeconds(destroyAfter);
-		//Destroy bullet object
 		Destroy(gameObject);
 	}
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WeaponSwitcher : MonoBehaviour
 {
+    //troca de arma, nao uso mas e bom
     public int selectedWeapon = 0;
     public Transform[] guns;
     [HideInInspector]

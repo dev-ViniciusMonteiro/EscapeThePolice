@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+//referencia: https://www.alura.com.br/curso-online-criacao-de-jogos-com-unity
 public class Target : MonoBehaviour
 {
     public int health;
@@ -16,12 +17,14 @@ public class Target : MonoBehaviour
 
     private void Awake()
     {
+        //instancia a animacao
         _anim = GetComponent<Animator>();
     }
 
 
     public virtual void TakeDamage(int amount)
     {
+        //se tiver vida vai tirando e colocando audio
          if (health > 0)
          {
              health -= amount;
@@ -34,13 +37,13 @@ public class Target : MonoBehaviour
                 StartCoroutine(StunCorroutine());
              }
          }
-    
+        //caso nao tenha vida
          if (health <= 0)
          {
             Die();  
          }
     }
-
+    //seta animacao de morto, coloca chave de morto e destroi tudo
     void Die()
     {
         _anim.SetBool("IsDead", true);
@@ -48,6 +51,7 @@ public class Target : MonoBehaviour
         Destroy(gameObject, timeToDie);
     }
 
+//colisao para o hit
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<PlayerStats>())
@@ -57,6 +61,7 @@ public class Target : MonoBehaviour
         }
     }
 
+//corrotina de fazer o zombie ter hit
     IEnumerator StunCorroutine()
     {
         speed = 0;

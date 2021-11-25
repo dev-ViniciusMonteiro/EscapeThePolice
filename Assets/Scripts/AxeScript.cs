@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//https://www.youtube.com/watch?v=PxdoBJBCcrw
+//no site dele ele explica melhor https://obalfaqih.com/
 public class AxeScript : MonoBehaviour
 {
     public float rotationSpeed;
@@ -12,13 +14,13 @@ public class AxeScript : MonoBehaviour
     [SerializeField] private AudioClip axeSound;
 
     [Range(5, 100)]
-    [Tooltip("After how long time should the bullet prefab be destroyed?")]
+    //Depois de quanto tempo o pré-fabricado com bala deve ser destruído?"
     public float destroyAfter;
-    [Tooltip("If enabled the bullet destroys on impact")]
+    //Se habilitado, a bala destrói no impacto
     public bool destroyOnImpact = false;
-    [Tooltip("Minimum time after impact that the bullet is destroyed")]
+    //Tempo mínimo após o impacto que a bala é destruída
     public float minDestroyTime;
-    [Tooltip("Maximum time after impact that the bullet is destroyed")]
+    //Tempo máximo após o impacto em que a bala é destruída
     public float maxDestroyTime;
 
 
@@ -39,6 +41,7 @@ public class AxeScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //dano jogador
         if (other.gameObject.CompareTag("Player"))
         {
             other.gameObject.GetComponent<PlayerStats>().SendMessage("TakeDamage", damage);
@@ -46,6 +49,7 @@ public class AxeScript : MonoBehaviour
         }
         else
         {
+            //destroir dps
             if (!destroyOnImpact)
             {
                 StartCoroutine(DestroyTimer());
@@ -60,6 +64,7 @@ public class AxeScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        //impacto com obj
         if (!destroyOnImpact)
         {
             StartCoroutine(DestroyTimer());
@@ -72,10 +77,9 @@ public class AxeScript : MonoBehaviour
 
     private IEnumerator DestroyTimer()
     {
-        //Wait random time based on min and max values
+        //tempo para destruir
         yield return new WaitForSeconds
             (Random.Range(minDestroyTime, maxDestroyTime));
-        //Destroy bullet object
         Destroy(gameObject);
     }
 }

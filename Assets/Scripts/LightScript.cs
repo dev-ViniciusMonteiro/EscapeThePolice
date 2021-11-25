@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//https://www.alura.com.br/curso-online-criacao-de-jogos-com-unity
 public class LightScript : MonoBehaviour
 {
+    //luz
     Light lightSettings;
     bool change = false;
     public bool changeColor = false;
@@ -11,16 +12,16 @@ public class LightScript : MonoBehaviour
     public float timeScale;
 
     private void Awake()
-    {
+    {//pega componente
         lightSettings = GetComponent<Light>();
     }
     private void Start()
-    {
+    {//pega cor
         lightSettings.color = Color.white;
     }
 
     private void Update()
-    {
+    {//se e pra mudar cor
         if (changeColor)
         {
             lightSettings.range = timeToChange;

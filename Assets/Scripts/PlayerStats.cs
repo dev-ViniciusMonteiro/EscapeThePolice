@@ -5,6 +5,13 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
+
+// codigo feito por https://www.alura.com.br/curso-online-criacao-de-jogos-com-unity
+//tinha habilidades na video aula, era um jogo com missoes de recuperar energia de gerado e o zommbie quebravam o mesmo
+//mas nao consegui replicar como ele fez entao basicamente fiz funcionar o que eu precisava e deixei o resto sem usar ai
+//por isso o jogo da varios erros de tag mas como nao uso nao da erro na funcao
+// bola pra frente :)
+//esse jogo 2d me ajudou bastante com os bugs nesse codigo: https://www.youtube.com/watch?v=Crm4Vrm4DAg
 public class PlayerStats : MonoBehaviour
 {
     public Image healthBar;
@@ -50,15 +57,11 @@ public class PlayerStats : MonoBehaviour
         healthText.text = curHealth.ToString();
         SetHealthBar();
         situationText.gameObject.SetActive(false);
-        //timeText.gameObject.SetActive(false);
-        //for (int i = 0; i < spotLights.Length; i++)
-        //{
-        //    spotLights[i].color = normalColor;
-        //}
     }
 
     private void Update()
     {
+        Debug.Log(maxHealth);
         bloodyScreen.color = alphaColor;
         if (hitPlayer)
         {
@@ -124,9 +127,11 @@ public class PlayerStats : MonoBehaviour
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            SceneManager.LoadScene("Derrota");
+            SceneManager.LoadScene("Fede");
         }
     }
+
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -145,7 +150,7 @@ public class PlayerStats : MonoBehaviour
             if (oilCount == 3)
             {
                 situationText.gameObject.SetActive(true);
-                situationText.text = "Presiona F para abrir";
+                situationText.text = "F para abrir";
                 if (Input.GetKeyDown(KeyCode.F))
                 {            
                     openDoor = true;
@@ -154,14 +159,14 @@ public class PlayerStats : MonoBehaviour
                         situationText.gameObject.SetActive(false);
                         Cursor.visible = true;
                         Cursor.lockState = CursorLockMode.None;
-                        SceneManager.LoadScene("Win");
+                        SceneManager.LoadScene("Venceu");
                     }
                 }
             }
             else
             {
                 situationText.gameObject.SetActive(true);
-                situationText.text = "No puedes abrir porque no hay electricidad";
+                situationText.text = "nao tem eletrecidade";
             }
 
         }
@@ -291,38 +296,4 @@ public class PlayerStats : MonoBehaviour
        }
     }
 
-    //private void SetLightning()
-    //{
-    //    for (int i = 0; i < spotLights.Length; i++)
-    //    {
-    //        spotLights[i].GetComponent<LightScript>().changeColor = true;
-    //        spotLights[i].color = warningColor;
-    //    }
-    //}
-    //
-    //private void SetTimerOn()
-    //{
-    //    if (timerToFinishLevel > 0)
-    //    {
-    //        timerToFinishLevel -= Time.deltaTime;
-    //    }
-    //    else
-    //    {
-    //        timerToFinishLevel = 0;
-    //    }
-    //    DisplayTime(timerToFinishLevel);
-    //}
-    //
-    //void DisplayTime(float timeToDisplay)
-    //{
-    //    if (timeToDisplay < 0)
-    //    {
-    //        timeToDisplay = 0;
-    //    }
-    //
-    //    float seconds = Mathf.FloorToInt(timeToDisplay % 60);
-    //    float miliseconds = timeToDisplay % 1 * 100;
-    //
-    //    timeText.text = string.Format("{0:00}:{1:00}", seconds, miliseconds);
-    //}
 }

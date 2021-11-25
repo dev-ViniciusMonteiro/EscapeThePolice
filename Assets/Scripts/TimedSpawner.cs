@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+//spaw zoombie nao uso maz bem legal
 public class TimedSpawner : MonoBehaviour
 {
     public GameObject zombie;
